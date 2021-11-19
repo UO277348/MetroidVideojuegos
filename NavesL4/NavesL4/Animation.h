@@ -8,6 +8,12 @@ public:
 	Animation(string filename, float actorWidth, float actorHeight,
 		float fileWidth, float fileHeight,
 		int updateFrecuence, int totalFrames, bool loop, Game* game);
+
+	Animation(string filename, float actorWidth, float actorHeight,
+		float fileWidth, float fileHeight,
+		int updateFrecuence, int totalFrames, bool loop, Game* game, bool reverse, int startFrame);
+
+	void resetFrame();
 	bool update();
 	void draw(float x, float y);
 	bool loop;
@@ -15,6 +21,7 @@ public:
 	int actorHeight; // Actor height
 	int fileWidth; // Sprite Sheet width
 	int fileHeight; // Sprite Sheet height
+	int initialFrame = 0;
 	int currentFrame;
 	int totalFrames;
 	Game* game;
@@ -26,5 +33,8 @@ public:
 	float frameHeigt; // Alto de un fotograma
 	int updateFrecuence = 0;
 	int updateTime = 0;
+
+	bool reverse = false;
+	bool tillStart = false;
 };
 
