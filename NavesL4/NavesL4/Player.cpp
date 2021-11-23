@@ -10,41 +10,45 @@ Player::Player(float x, float y, Game* game)
 
 
 	aShootingRight = new Animation("res/jugador_disparando_derecha.png",
-		width, height, 160, 40, 6, 4, false, game);
+		width, height, 160, 77, 1, 2, false, game);
 	aShootingLeft = new Animation("res/jugador_disparando_izquierda.png",
-		width, height, 160, 40, 6, 4, false, game);
+		width, height, 160, 77, 1, 2, false, game);
 
 
 	aJumpingRight = new Animation("res/jugador_saltando_derecha.png",
-		width, height, 160, 40, 6, 4, true, game);
+		width, height, 350, 77, 15, 5, true, game);
 	aJumpingLeft = new Animation("res/jugador_saltando_izquierda.png",
-		width, height, 160, 40, 6, 4, true, game);
+		width, height, 350, 77, 15, 5, true, game);
 
 
 	aIdleRight = new Animation("res/jugador_idle_derecha.png", width, height,
-		966, 77, 4, 12, true, game, true, 11);
+		960, 77, 4, 12, true, game, true, 11);
 	aIdleLeft = new Animation("res/jugador_idle_derecha.png", width, height,
-		966, 77, 4, 12, true, game, true, 0);
+		960, 77, 4, 12, true, game, true, 0);
 
 
 	aRunningRight = new Animation("res/jugador_corriendo_derecha.png", width, height,
-		1000, 77, 2, 10, true, game);
+		1000, 77, 1, 10, true, game);
 	aRunningLeft = new Animation("res/jugador_corriendo_izquierda.png", width, height,
-		1000, 77, 2, 10, true, game);
+		1000, 77, 1, 10, true, game);
 
 
 	animation = aIdleRight;
 
+	//gravityEffect = false;
 }
 
 
 void Player::update() {
+	//animation->resetFrame();
 	// En el aire y moviéndose, PASA a estar saltando
 	if (onAir && state == game->stateMoving) {
+		lastState = state;
 		state = game->stateJumping;
 	}
 	// No está en el aire y estaba saltando, PASA a moverse
 	if (!onAir && state == game->stateJumping) {
+		lastState = state;
 		state = game->stateMoving;
 	}
 
@@ -67,6 +71,7 @@ void Player::update() {
 	if (endAnimation) {
 		// Estaba disparando
 		if (state == game->stateShooting) {
+			lastState = state;
 			state = game->stateMoving;
 		}
 	}
@@ -101,9 +106,13 @@ void Player::update() {
 	if (state == game->stateMoving) {
 		if (vx != 0) {
 			if (orientation == game->orientationRight) {
+				aIdleRight->resetFrame();
+				aIdleLeft->resetFrame();
 				animation = aRunningRight;
 			}
 			if (orientation == game->orientationLeft) {
+				aIdleRight->resetFrame();
+				aIdleLeft->resetFrame();
 				animation = aRunningLeft;
 			}
 		}
@@ -136,6 +145,7 @@ void Player::moveY(float axis) {
 Projectile* Player::shoot() {
 
 	if (shootTime == 0) {
+		lastState = state;
 		state = game->stateShooting;
 		audioShoot->play();
 		aShootingLeft->currentFrame = 0; //"Rebobinar" aniamción
