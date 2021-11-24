@@ -24,20 +24,8 @@ void MenuLayer::processControls() {
 	// obtener controles
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
-		if (event.type == SDL_CONTROLLERDEVICEADDED) {
-			gamePad = SDL_GameControllerOpen(0);
-			if (gamePad == NULL) {
-				cout << "error en GamePad" << endl;
-			}
-			else {
-				cout << "GamePad conectado" << endl;
-			}
-		}
 		// Cambio automático de input
 		// PONER el GamePad
-		if (event.type == SDL_CONTROLLERBUTTONDOWN || event.type == SDL_CONTROLLERAXISMOTION) {
-			game->input = game->inputGamePad;
-		}
 		if (event.type == SDL_KEYDOWN) {
 			game->input = game->inputKeyboard;
 		}
@@ -45,9 +33,6 @@ void MenuLayer::processControls() {
 			game->input = game->inputMouse;
 		}
 		// Procesar teclas
-		if (game->input == game->inputGamePad) {  // gamePAD
-			gamePadToControls(event);
-		}
 		if (game->input == game->inputKeyboard) {
 			keysToControls(event);
 		}
