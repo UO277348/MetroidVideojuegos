@@ -463,7 +463,11 @@ void GameLayer::keysToControls(SDL_Event event) {
 		case SDLK_SPACE: // dispara
 			controlShoot = true;
 			break;
+		case SDLK_p: // dispara
+			pause = true;
+			break;
 		}
+
 	}
 	if (event.type == SDL_KEYUP) {
 		int code = event.key.keysym.sym;
@@ -492,7 +496,11 @@ void GameLayer::keysToControls(SDL_Event event) {
 		case SDLK_SPACE: // dispara
 			controlShoot = false;
 			break;
+		case SDLK_p: // dispara
+			pause = false;
+			break;
 		}
+
 	}
 }
 
