@@ -4,7 +4,7 @@ GameLayer::GameLayer(Game* game)
 	: Layer(game) {
 	//llama al constructor del padre : Layer(renderer)
 	pause = true;
-	message = new Actor("res/mensaje_como_jugar.png", WIDTH * 0.5, HEIGHT * 0.5,
+	message = new Actor("res/fondos/mensaje_como_jugar.png", WIDTH * 0.5, HEIGHT * 0.5,
 		WIDTH, HEIGHT, game);
 
 	gamePad = SDL_GameControllerOpen(0);
@@ -23,7 +23,7 @@ void GameLayer::init() {
 	scrollY = 0;
 	tiles.clear();
 
-	audioBackground = new Audio("res/musica_ambiente.mp3", true);
+	audioBackground = new Audio("res/sonidos/musica_ambiente.mp3", true);
 	audioBackground->play();
 
 	points = 0;
@@ -35,10 +35,10 @@ void GameLayer::init() {
 	textRecolectables->content = to_string(pointsRecolestables);
 
 	
-	background = new Background("res/fondo_2.png", WIDTH * 0.5, HEIGHT * 0.5, -1, game);
-	backgroundPoints = new Actor("res/icono_puntos.png",
+	background = new Background("res/fondos/fondo_2.png", WIDTH * 0.5, HEIGHT * 0.5, -1, game);
+	backgroundPoints = new Actor("res/iconos/icono_puntos.png",
 		WIDTH * 0.85, HEIGHT * 0.07, 24, 24, game);
-	backgroundRecolectables = new Actor("res/icono_recolectable.png",
+	backgroundRecolectables = new Actor("res/iconos/icono_recolectable.png",
 		WIDTH * 0.65, HEIGHT * 0.07, 40, 40, game);
 
 	enemies.clear(); // Vaciar por si reiniciamos el juego
@@ -79,6 +79,11 @@ void GameLayer::loadMap(string name) {
 
 void GameLayer::loadMapObject(char character, float x, float y)
 {
+	Tile* tile = new BackgroundTile("res/tiles/background_lvl1.png", x, y, game);
+	tile->y = tile->y - tile->height / 2;
+	tiles.push_back(tile);
+	space->addStaticActor(tile);
+
 	switch (character) {
 	case 'E': {
 		Enemy* enemy = new Minion(x, y, game);
@@ -90,14 +95,6 @@ void GameLayer::loadMapObject(char character, float x, float y)
 	}
 	case 'Z': {
 		Enemy* enemy = new Zombie(x, y, game);
-		// modificación para empezar a contar desde el suelo.
-		enemy->y = enemy->y - enemy->height / 2;
-		enemies.push_back(enemy);
-		space->addDynamicActor(enemy);
-		break;
-	}
-	case 'R': {
-		Enemy* enemy = new Cuervo(x, y, game);
 		// modificación para empezar a contar desde el suelo.
 		enemy->y = enemy->y - enemy->height / 2;
 		enemies.push_back(enemy);
@@ -120,7 +117,23 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case '#': {
-		Tile* tile = new Tile("res/bloque_tierra.png", x, y, game);
+		Tile* tile = new Tile("res/tiles/suelo_lvl1.png", x, y, game);
+		// modificación para empezar a contar desde el suelo.
+		tile->y = tile->y - tile->height / 2;
+		tiles.push_back(tile);
+		space->addStaticActor(tile);
+		break;
+	}
+	case '(': {
+		Tile* tile = new BackgroundTile("res/tiles/vaya_lvl1.png", x, y, game);
+		// modificación para empezar a contar desde el suelo.
+		tile->y = tile->y - tile->height / 2;
+		tiles.push_back(tile);
+		space->addStaticActor(tile);
+		break;
+	}
+	case ')': {
+		Tile* tile = new BackgroundTile("res/tiles/vaya2_lvl1.png", x, y, game);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);

@@ -164,7 +164,7 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Background.cpp" />
-    <ClCompile Include="Cuervo.cpp" />
+    <ClCompile Include="BackgroundTile.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Minion.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -186,7 +186,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Audio.h" />
     <ClInclude Include="Background.h" />
-    <ClInclude Include="Cuervo.h" />
+    <ClInclude Include="BackgroundTile.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Minion.h" />
     <ClInclude Include="Game.h" />

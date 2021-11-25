@@ -16,6 +16,7 @@ public:
 	bool outRight;
 	bool outLeft;
 	bool gravityEffect = true;
+	bool isBackgraound = false;
 
 	bool clicked; // Está pulsado
 	SDL_Texture* texture;
