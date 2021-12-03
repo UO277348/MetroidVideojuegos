@@ -7,11 +7,12 @@
 #include "Enemy.h"
 #include "Minion.h"
 #include "Zombie.h"
-#include "Cuervo.h"
 #include "Recolectable.h"
 #include "Projectile.h"
 #include "Text.h"
 #include "Tile.h"
+#include "BackgroundTile.h"
+#include "TileDestruible.h"
 #include "Pad.h"
 
 #include "Audio.h"
@@ -30,8 +31,6 @@ public:
 	void update() override;
 	void draw() override;
 	void keysToControls(SDL_Event event);
-	void mouseToControls(SDL_Event event); // USO DE MOUSE
-	void gamePadToControls(SDL_Event event); // USO DE GAMEPAD
 	void loadMap(string name);
 	void loadMapObject(char character, float x, float y);
 	void calculateScroll();
@@ -49,7 +48,7 @@ public:
 	int mapWidth;
 	float scrollY;
 	int mapHeight;
-	list<Tile*> tiles;
+	
 
 	Audio* audioBackground;
 	Text* textPoints;
@@ -64,6 +63,8 @@ public:
 	list<Enemy*> enemies;
 	list<Projectile*> projectiles;
 	list<Recolectable*> recolectables;
+	list<Tile*> tiles;
+	list<Tile*> tilesDest;
 
 	bool controlContinue = false;
 	bool controlShoot = false;

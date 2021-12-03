@@ -11,8 +11,8 @@ void Space::update() {
         if (actor->gravityEffect) {
             actor->vy = actor->vy + gravity;
             // máxima velocidad de caída por gravedad
-            if (actor->vy > 20) {
-                actor->vy = 20;
+            if (actor->vy > 15) {
+                actor->vy = 15;
             }
         }
         // Aun no se han detectado choques
@@ -37,26 +37,28 @@ void Space::updateMoveRight(Actor* dynamicAct) {
         // El mejor "idealmente" vx partimos de ese
 
         for (auto const& staticAct : staticActors) {
-            int rightDynamic = dynamicAct->x + dynamicAct->width / 2;
-            int topDynamic = dynamicAct->y - dynamicAct->height / 2;
-            int downDynamic = dynamicAct->y + dynamicAct->height / 2;
+            if (staticAct->isBackgraound == false) {
+                int rightDynamic = dynamicAct->x + dynamicAct->width / 2;
+                int topDynamic = dynamicAct->y - dynamicAct->height / 2;
+                int downDynamic = dynamicAct->y + dynamicAct->height / 2;
 
-            int leftStatic = staticAct->x - staticAct->width / 2;
-            int topStatic = staticAct->y - staticAct->height / 2;
-            int downStatic = staticAct->y + staticAct->height / 2;
+                int leftStatic = staticAct->x - staticAct->width / 2;
+                int topStatic = staticAct->y - staticAct->height / 2;
+                int downStatic = staticAct->y + staticAct->height / 2;
 
-            // Alerta!, Elemento estático en la trayectoria.
-            if ((rightDynamic + dynamicAct->vx) >= leftStatic
-                && rightDynamic <= leftStatic
-                && topStatic < downDynamic
-                && downStatic > topDynamic) {
+                // Alerta!, Elemento estático en la trayectoria.
+                if ((rightDynamic + dynamicAct->vx) >= leftStatic
+                    && rightDynamic <= leftStatic
+                    && topStatic < downDynamic
+                    && downStatic > topDynamic) {
 
-                // Comprobamos si la distancia al estático es menor
-                // que nuestro movimientoPosible actual
-                if (possibleMovement >= leftStatic - rightDynamic) {
-                    // La distancia es MENOR que nuestro movimiento posible
-                    // Tenemos que actualizar el movimiento posible a uno menor
-                    possibleMovement = leftStatic - rightDynamic;
+                    // Comprobamos si la distancia al estático es menor
+                    // que nuestro movimientoPosible actual
+                    if (possibleMovement >= leftStatic - rightDynamic) {
+                        // La distancia es MENOR que nuestro movimiento posible
+                        // Tenemos que actualizar el movimiento posible a uno menor
+                        possibleMovement = leftStatic - rightDynamic;
+                    }
                 }
             }
         }
@@ -74,28 +76,30 @@ void Space::updateMoveLeft(Actor* dynamicAct) {
         // El mejor "idealmente" vx partimos de ese
 
         for (auto const& staticAct : staticActors) {
-            int leftDynamic = dynamicAct->x - dynamicAct->width / 2;
-            int topDynamic = dynamicAct->y - dynamicAct->height / 2;
-            int downDynamic = dynamicAct->y + dynamicAct->height / 2;
+            if (staticAct->isBackgraound == false) {
+                int leftDynamic = dynamicAct->x - dynamicAct->width / 2;
+                int topDynamic = dynamicAct->y - dynamicAct->height / 2;
+                int downDynamic = dynamicAct->y + dynamicAct->height / 2;
 
-            int rightStatic = staticAct->x + staticAct->width / 2;
-            int topStatic = staticAct->y - staticAct->height / 2;
-            int downStatic = staticAct->y + staticAct->height / 2;
+                int rightStatic = staticAct->x + staticAct->width / 2;
+                int topStatic = staticAct->y - staticAct->height / 2;
+                int downStatic = staticAct->y + staticAct->height / 2;
 
-            // Alerta!, Elemento estático en la trayectoria.
-            if ((leftDynamic + dynamicAct->vx) <= rightStatic
-                && leftDynamic >= rightStatic
-                && topStatic < downDynamic
-                && downStatic > topDynamic) {
+                // Alerta!, Elemento estático en la trayectoria.
+                if ((leftDynamic + dynamicAct->vx) <= rightStatic
+                    && leftDynamic >= rightStatic
+                    && topStatic < downDynamic
+                    && downStatic > topDynamic) {
 
-                // Comprobamos si la distancia al estático es menor
-                // que nuestro movimientoPosible actual
-                if (possibleMovement <= rightStatic - leftDynamic) {
-                    // La distancia es MENOR que nuestro movimiento posible
-                    // Tenemos que actualizar el movimiento posible a uno menor
-                    possibleMovement = rightStatic - leftDynamic;
+                    // Comprobamos si la distancia al estático es menor
+                    // que nuestro movimientoPosible actual
+                    if (possibleMovement <= rightStatic - leftDynamic) {
+                        // La distancia es MENOR que nuestro movimiento posible
+                        // Tenemos que actualizar el movimiento posible a uno menor
+                        possibleMovement = rightStatic - leftDynamic;
+                    }
+
                 }
-
             }
 
         }
@@ -113,29 +117,31 @@ void Space::updateMoveTop(Actor* dynamicAct) {
         // El mejor "idealmente" vy partimos de ese
 
         for (auto const& staticAct : staticActors) {
-            int topDynamic = dynamicAct->y - dynamicAct->height / 2;
-            int downDynamic = dynamicAct->y + dynamicAct->height / 2;
-            int rightDynamic = dynamicAct->x + dynamicAct->width / 2;
-            int leftDynamic = dynamicAct->x - dynamicAct->width / 2;
+            if (staticAct->isBackgraound == false) {
+                int topDynamic = dynamicAct->y - dynamicAct->height / 2;
+                int downDynamic = dynamicAct->y + dynamicAct->height / 2;
+                int rightDynamic = dynamicAct->x + dynamicAct->width / 2;
+                int leftDynamic = dynamicAct->x - dynamicAct->width / 2;
 
-            int topStatic = staticAct->y - staticAct->height / 2;
-            int downStatic = staticAct->y + staticAct->height / 2;
-            int rightStatic = staticAct->x + staticAct->width / 2;
-            int leftStatic = staticAct->x - staticAct->width / 2;
+                int topStatic = staticAct->y - staticAct->height / 2;
+                int downStatic = staticAct->y + staticAct->height / 2;
+                int rightStatic = staticAct->x + staticAct->width / 2;
+                int leftStatic = staticAct->x - staticAct->width / 2;
 
-            // Alerta!, Elemento estático en la trayectoria.
-            if ((topDynamic + dynamicAct->vy) <= downStatic
-                && downDynamic > topStatic
-                && leftDynamic < rightStatic
-                && rightDynamic > leftStatic) {
+                // Alerta!, Elemento estático en la trayectoria.
+                if ((topDynamic + dynamicAct->vy) <= downStatic
+                    && downDynamic > topStatic
+                    && leftDynamic < rightStatic
+                    && rightDynamic > leftStatic) {
 
-                // Comprobamos si la distancia al estático es menor
-                // que nuestro movimientoPosible actual
-                if (possibleMovement <= downStatic - topDynamic) {
-                    // La distancia es MENOR que nuestro movimiento posible
-                    // Tenemos que actualizar el movimiento posible a uno menor
-                    possibleMovement = downStatic - topDynamic;
-                    dynamicAct->collisionUp = true;
+                    // Comprobamos si la distancia al estático es menor
+                    // que nuestro movimientoPosible actual
+                    if (possibleMovement <= downStatic - topDynamic) {
+                        // La distancia es MENOR que nuestro movimiento posible
+                        // Tenemos que actualizar el movimiento posible a uno menor
+                        possibleMovement = downStatic - topDynamic;
+                        dynamicAct->collisionUp = true;
+                    }
                 }
             }
         }
@@ -154,37 +160,39 @@ void Space::updateMoveDown(Actor* dynamicAct) {
         // El mejor "idealmente" vy partimos de ese
 
         for (auto const& staticAct : staticActors) {
-            int topDynamic = dynamicAct->y - dynamicAct->height / 2;
-            int downDynamic = dynamicAct->y + dynamicAct->height / 2;
-            int rightDynamic = dynamicAct->x + dynamicAct->width / 2;
-            int leftDynamic = dynamicAct->x - dynamicAct->width / 2;
+            if (staticAct->isBackgraound == false) {
+                int topDynamic = dynamicAct->y - dynamicAct->height / 2;
+                int downDynamic = dynamicAct->y + dynamicAct->height / 2;
+                int rightDynamic = dynamicAct->x + dynamicAct->width / 2;
+                int leftDynamic = dynamicAct->x - dynamicAct->width / 2;
 
-            int topStatic = staticAct->y - staticAct->height / 2;
-            int downStatic = staticAct->y + staticAct->height / 2;
-            int rightStatic = staticAct->x + staticAct->width / 2;
-            int leftStatic = staticAct->x - staticAct->width / 2;
+                int topStatic = staticAct->y - staticAct->height / 2;
+                int downStatic = staticAct->y + staticAct->height / 2;
+                int rightStatic = staticAct->x + staticAct->width / 2;
+                int leftStatic = staticAct->x - staticAct->width / 2;
 
-            // Alerta!, Elemento estático en la trayectoria.
-            if ((downDynamic + dynamicAct->vy) >= topStatic
-                && topDynamic < downStatic
-                && leftDynamic < rightStatic
-                && rightDynamic > leftStatic) {
+                // Alerta!, Elemento estático en la trayectoria.
+                if ((downDynamic + dynamicAct->vy) >= topStatic
+                    && topDynamic < downStatic
+                    && leftDynamic < rightStatic
+                    && rightDynamic > leftStatic) {
 
-                // Comprobamos si la distancia al estático es menor
-                // que nuestro movimientoPosible actual
-                if (possibleMovement >= topStatic - downDynamic) {
-                    // La distancia es MENOR que nuestro movimiento posible
-                    // Tenemos que actualizar el movimiento posible a uno menor
-                    possibleMovement = topStatic - downDynamic;
-                    dynamicAct->collisionDown = true;
+                    // Comprobamos si la distancia al estático es menor
+                    // que nuestro movimientoPosible actual
+                    if (possibleMovement >= topStatic - downDynamic) {
+                        // La distancia es MENOR que nuestro movimiento posible
+                        // Tenemos que actualizar el movimiento posible a uno menor
+                        possibleMovement = topStatic - downDynamic;
+                        dynamicAct->collisionDown = true;
 
-                    if (rightDynamic <= rightStatic) {
-                        dynamicAct->outRight = false;
+                        if (rightDynamic <= rightStatic) {
+                            dynamicAct->outRight = false;
+                        }
+                        if (leftDynamic >= leftStatic) {
+                            dynamicAct->outLeft = false;
+                        }
+
                     }
-                    if (leftDynamic >= leftStatic) {
-                        dynamicAct->outLeft = false;
-                    }
-
                 }
             }
         }

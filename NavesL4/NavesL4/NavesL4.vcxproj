@@ -164,7 +164,7 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Background.cpp" />
-    <ClCompile Include="Cuervo.cpp" />
+    <ClCompile Include="BackgroundTile.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Minion.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -179,6 +179,7 @@
     <ClCompile Include="Space.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="TileDestruible.cpp" />
     <ClCompile Include="Zombie.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -186,7 +187,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Audio.h" />
     <ClInclude Include="Background.h" />
-    <ClInclude Include="Cuervo.h" />
+    <ClInclude Include="BackgroundTile.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Minion.h" />
     <ClInclude Include="Game.h" />
@@ -200,6 +201,7 @@
     <ClInclude Include="Space.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="Tile.h" />
+    <ClInclude Include="TileDestruible.h" />
     <ClInclude Include="Zombie.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
