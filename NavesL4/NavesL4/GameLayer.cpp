@@ -35,7 +35,7 @@ void GameLayer::init() {
 	textRecolectables->content = to_string(pointsRecolestables);
 
 	
-	background = new Background("res/fondos/fondo_2.png", WIDTH * 0.5, HEIGHT * 0.5, -1, game);
+	background = new Background("res/fondos/fondo.png", WIDTH * 0.5, HEIGHT * 0.5, -1, game);
 	backgroundPoints = new Actor("res/iconos/icono_puntos.png",
 		WIDTH * 0.85, HEIGHT * 0.07, 24, 24, game);
 	backgroundRecolectables = new Actor("res/iconos/icono_recolectable.png",
@@ -79,11 +79,6 @@ void GameLayer::loadMap(string name) {
 
 void GameLayer::loadMapObject(char character, float x, float y)
 {
-	Tile* tile = new BackgroundTile("res/tiles/background_lvl1.png", x, y, game);
-	tile->y = tile->y - tile->height / 2;
-	tiles.push_back(tile);
-	space->addStaticActor(tile);
-
 	switch (character) {
 	case 'E': {
 		Enemy* enemy = new Minion(x, y, game);
@@ -114,31 +109,47 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		// modificación para empezar a contar desde el suelo.
 		player->y = player->y - player->height / 2;
 		space->addDynamicActor(player);
+
+		Tile* tile = new BackgroundTile("res/tiles/background_lvl1.png", x, y, game);
+		tile->y = tile->y - tile->height / 2;
+		tiles.push_back(tile);
+		space->addStaticActor(tile);
 		break;
 	}
 	case '#': {
-		Tile* tile = new Tile("res/tiles/suelo_lvl1.png", x, y, game);
+		Tile* tile = new Tile("res/tiles/suelo_lvl1.png", x, y,111,63, game);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
 		space->addStaticActor(tile);
 		break;
 	}
-	case '(': {
-		Tile* tile = new BackgroundTile("res/tiles/vaya_lvl1.png", x, y, game);
+	case 'P': {
+		Tile* tile = new Tile("res/tiles/pared_lvl1.png", x, y,62,112, game);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
 		space->addStaticActor(tile);
 		break;
 	}
-	case ')': {
-		Tile* tile = new BackgroundTile("res/tiles/vaya2_lvl1.png", x, y, game);
-		// modificación para empezar a contar desde el suelo.
+	case 'C': {
+		Tile* tile = new BackgroundTile("res/tiles/background_lvl1.png", x, y, game);
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
 		space->addStaticActor(tile);
+
+		Tile* caja = new TileDestruible("res/tiles/caja_lvl1.png", x, y,80,64, game);
+		// modificación para empezar a contar desde el suelo.
+		caja->y = caja->y - caja->height / 2;
+		tilesDest.push_back(caja);
+		space->addStaticActor(caja);
 		break;
+	}
+	case '.': {
+		Tile* tile = new BackgroundTile("res/tiles/background_lvl1.png", x, y, game);
+		tile->y = tile->y - tile->height / 2;
+		tiles.push_back(tile);
+		space->addStaticActor(tile);
 	}
 	}
 }
@@ -403,6 +414,10 @@ void GameLayer::draw() {
 
 	background->draw();
 	for (auto const& tile : tiles) {
+		tile->draw(scrollX, scrollY);
+	}
+
+	for (auto const& tile : tilesDest) {
 		tile->draw(scrollX, scrollY);
 	}
 

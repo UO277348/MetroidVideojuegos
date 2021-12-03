@@ -12,6 +12,7 @@
 #include "Text.h"
 #include "Tile.h"
 #include "BackgroundTile.h"
+#include "TileDestruible.h"
 #include "Pad.h"
 
 #include "Audio.h"
@@ -47,7 +48,7 @@ public:
 	int mapWidth;
 	float scrollY;
 	int mapHeight;
-	list<Tile*> tiles;
+	
 
 	Audio* audioBackground;
 	Text* textPoints;
@@ -62,6 +63,8 @@ public:
 	list<Enemy*> enemies;
 	list<Projectile*> projectiles;
 	list<Recolectable*> recolectables;
+	list<Tile*> tiles;
+	list<Tile*> tilesDest;
 
 	bool controlContinue = false;
 	bool controlShoot = false;

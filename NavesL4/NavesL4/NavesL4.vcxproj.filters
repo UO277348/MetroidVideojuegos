@@ -87,6 +87,9 @@
     <ClCompile Include="BackgroundTile.cpp">
       <Filter>Archivos de origen\actores</Filter>
     </ClCompile>
+    <ClCompile Include="TileDestruible.cpp">
+      <Filter>Archivos de origen\actores</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -144,6 +147,9 @@
       <Filter>Archivos de encabezado\actores</Filter>
     </ClInclude>
     <ClInclude Include="BackgroundTile.h">
+      <Filter>Archivos de encabezado\actores</Filter>
+    </ClInclude>
+    <ClInclude Include="TileDestruible.h">
       <Filter>Archivos de encabezado\actores</Filter>
     </ClInclude>
   </ItemGroup>

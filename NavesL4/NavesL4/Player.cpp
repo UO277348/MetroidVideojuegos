@@ -135,11 +135,11 @@ void Player::update() {
 }
 
 void Player::moveX(float axis) {
-	vx = axis * 3;
+	vx = axis * 5;
 }
 
 void Player::moveY(float axis) {
-	vy = axis * 3;
+	vy = axis * 5;
 }
 
 Projectile* Player::shoot() {
