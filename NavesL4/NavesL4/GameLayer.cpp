@@ -176,12 +176,12 @@ void GameLayer::processControls() {
 		controlContinue = false;
 	}
 	if (controlShoot) {
-		Projectile* newProjectile = player->shoot();
+		//calculateScroll();
+		Projectile* newProjectile = player->shoot(mouseX+scrollX, mouseY+scrollY);
 		if (newProjectile != NULL) {
 			space->addDynamicActor(newProjectile);
 			projectiles.push_back(newProjectile);
 		}
-
 	}
 
 	// Eje X
@@ -328,6 +328,20 @@ void GameLayer::update() {
 			}
 		}
 	}
+	for (auto const& tile : tiles) {
+		for (auto const& projectile : projectiles) {
+			if (tile->isOverlap(projectile) && tile->isBackgraound==false) {
+				bool pInList = std::find(deleteProjectiles.begin(),
+					deleteProjectiles.end(),
+					projectile) != deleteProjectiles.end();
+
+				if (!pInList) {
+					deleteProjectiles.push_back(projectile);
+				}
+			}
+		}
+	}
+
 
 	for (auto const& caja : recolectables) {
 		if (player->isOverlap(caja)) {
@@ -450,9 +464,14 @@ void GameLayer::draw() {
 
 void GameLayer::keysToControls(SDL_Event event) {
 	if (event.type == SDL_MOUSEBUTTONDOWN) {
-		controlContinue = true;
-	}
+		controlShoot = true;
 
+		SDL_GetMouseState(&mouseX, &mouseY);
+	}
+	if (event.type == SDL_MOUSEBUTTONUP) {
+		controlShoot = false;
+	}
+	
 	if (event.type == SDL_KEYDOWN) {
 		int code = event.key.keysym.sym;
 		// Pulsada
@@ -476,7 +495,7 @@ void GameLayer::keysToControls(SDL_Event event) {
 			controlMoveY = 1;
 			break;
 		case SDLK_SPACE: // dispara
-			controlShoot = true;
+			controlContinue = true;
 			break;
 		case SDLK_p: // dispara
 			pause = true;
@@ -507,9 +526,6 @@ void GameLayer::keysToControls(SDL_Event event) {
 			if (controlMoveY == 1) {
 				controlMoveY = 0;
 			}
-			break;
-		case SDLK_SPACE: // dispara
-			controlShoot = false;
 			break;
 		case SDLK_p: // dispara
 			pause = false;

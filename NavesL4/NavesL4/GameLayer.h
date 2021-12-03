@@ -71,6 +71,9 @@ public:
 	int controlMoveY = 0;
 	int controlMoveX = 0;
 
+	int mouseX = 0;
+	int mouseY = 0;
+
 
 };
 

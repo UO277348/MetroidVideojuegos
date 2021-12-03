@@ -7,6 +7,7 @@ class Projectile : public Actor
 {
 public:
 	Projectile(float x, float y, Game* game);
+	Projectile(float x, float y, float mx, float my, Game* game);
 	Projectile(string filename, float x, float y, Game* game, bool enemyShot);
 
 	bool enemyShot;

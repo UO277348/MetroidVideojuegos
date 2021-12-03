@@ -10,7 +10,7 @@ class Player : public Actor
 {
 public:
 	Player(float x, float y, Game* game);
-	Projectile* shoot();
+	Projectile* shoot(int mx, int my);
 	bool saltoEncima(Enemy* enemy);
 	void update();
 	void jump();

@@ -142,7 +142,7 @@ void Player::moveY(float axis) {
 	vy = axis * 5;
 }
 
-Projectile* Player::shoot() {
+Projectile* Player::shoot(int mx, int my) {
 
 	if (shootTime == 0) {
 		lastState = state;
@@ -151,10 +151,18 @@ Projectile* Player::shoot() {
 		aShootingLeft->currentFrame = 0; //"Rebobinar" aniamción
 		aShootingRight->currentFrame = 0; //"Rebobinar" aniamción
 		shootTime = shootCadence;
-		Projectile* projectile = new Projectile(x, y, game);
-		if (orientation == game->orientationLeft) {
-			projectile->vx = projectile->vx * -1; // Invertir
+
+		if (mx > x) {
+			orientation = game->orientationRight;
 		}
+		if (mx < x) {
+			orientation = game->orientationLeft;
+		}
+
+		Projectile* projectile = new Projectile(x, y, mx, my, game);
+		//if (orientation == game->orientationLeft) {
+		//	projectile->vx = projectile->vx * -1; // Invertir
+		//}
 		return projectile;
 	}
 	else {
