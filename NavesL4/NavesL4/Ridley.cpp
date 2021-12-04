@@ -3,9 +3,6 @@
 Ridley::Ridley(float x, float y, Game* game)
 	: Enemy("res/enemigo.png", x, y, 175, 175, game) {
 
-	shootTime = 5;
-	shootCadence = 50;
-
 	state = game->stateMoving;
 
 	aDying = new Animation("res/enemigo_morir.png", width, height,
@@ -24,7 +21,9 @@ Ridley::Ridley(float x, float y, Game* game)
 	vyIntelligence = -1;
 	vy = vyIntelligence;
 
-	vidas = 3;
+	shootTime = 5;
+	shootCadence = 50;
+	vidas = 25;
 }
 
 void Ridley::update() {
@@ -41,8 +40,8 @@ void Ridley::update() {
 		}
 	}
 
-	if (state == game->stateMoving) {
-		animation = aMoving;
+	if (state == game->stateDying) {
+		animation = aDying;
 	}
 
 	// Establecer velocidad
@@ -52,14 +51,14 @@ void Ridley::update() {
 			vyIntelligence = vyIntelligence * -1;
 			vy = vyIntelligence;
 		}
-		if (outRight) {
+		if (collisionDown) {
 			// mover hacia la izquierda vx tiene que ser negativa
 			if (vyIntelligence > 0) {
 				vyIntelligence = vyIntelligence * -1;
 			}
 			vy = vyIntelligence;
 		}
-		if (outLeft) {
+		if (collisionUp) {
 			// mover hacia la derecha vx tiene que ser positiva
 			if (vyIntelligence < 0) {
 				vyIntelligence = vyIntelligence * -1;
@@ -73,7 +72,7 @@ void Ridley::update() {
 	}
 }
 
-Projectile* Ridley::shootPlayer() {
+Projectile* Ridley::shootPlayer(float px, float py) {
 
 	if (shootTime <= 0) {
 		shootTime = shootCadence;
@@ -83,5 +82,13 @@ Projectile* Ridley::shootPlayer() {
 	}
 	else {
 		return NULL;
+	}
+}
+
+void Ridley::impacted() {
+	if (state != game->stateDying) {
+		cout << "muerto";
+		state = game->stateDying;
+		shootTime = 500;
 	}
 }

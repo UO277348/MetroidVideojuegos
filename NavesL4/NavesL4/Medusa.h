@@ -1,17 +1,15 @@
 #pragma once
-#include "Actor.h"
-#include "Enemy.h"
-#include "Animation.h" 
-#include "Projectile.h" 
 
-class Ridley : public Enemy
+#include "Enemy.h"
+
+class Medusa : public Enemy
 {
 public:
-	Ridley(float x, float y, Game* game);
+	Medusa(float x, float y, Game* game);
+
 	void update() override;
 	Projectile* shootPlayer(float px, float py) override;
 	void impacted() override;
 
-	float vyIntelligence;
 };
 

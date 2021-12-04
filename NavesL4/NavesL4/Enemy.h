@@ -24,7 +24,7 @@ public:
 	int shootTime = -1;
 	int volarCadence = 0;
 	int volarTime = -1;
-	virtual Projectile* shootPlayer();
+	virtual Projectile* shootPlayer(float px, float py);
 
 	bool saltoEncima = false;
 };

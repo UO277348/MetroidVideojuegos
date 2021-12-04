@@ -6,7 +6,7 @@
 
 #include "Enemy.h"
 #include "Minion.h"
-#include "Zombie.h"
+#include "Medusa.h"
 #include "Ridley.h"
 #include "Recolectable.h"
 #include "Projectile.h"

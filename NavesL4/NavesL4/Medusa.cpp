@@ -1,20 +1,39 @@
-#include "Enemy.h"
+#include "Medusa.h"
 
-Enemy::Enemy(string filename, float x, float y, float fileWidth, float fileHeight, Game* game)
-	: Actor(filename, x, y, fileWidth, fileHeight, game) {
+Medusa::Medusa(float x, float y, Game* game)
+	: Enemy("res/enemyidle.png", x, y, 40, 40, game) {
+
+	state = game->stateMoving;
+
+	aDying = new Animation("res/enemigo_morir.png", width, height,
+		187, 60, 15, 3, false, game);
+
+	aMoving = new Animation("res/enemigo_volador.png", width, height,
+		746, 41, 8, 14, true, game);
+
+	animation = aMoving;
+
+	gravityEffect = false;
+
+	vx = 0;
 
 	vx = 1;
-	state = game->stateMoving;
 	vxIntelligence = -1;
 	vx = vxIntelligence;
+
+	shootTime = 5;
+	shootCadence = 50;
+	vidas = 1;
 }
 
+void Medusa::update() {
 
-void Enemy::update() {
-	// Actualizar la animación
+	if (shootTime > 0) {
+		shootTime--;
+	}
+
 	bool endAnimation = animation->update();
 
-	// Acabo la animación, no sabemos cual
 	if (endAnimation) {
 		// Estaba muriendo
 		if (state == game->stateDying) {
@@ -22,10 +41,7 @@ void Enemy::update() {
 		}
 	}
 
-
-	if (state == game->stateMoving) {
-		animation = aMoving;
-	}
+	
 	if (state == game->stateDying) {
 		animation = aDying;
 	}
@@ -58,17 +74,21 @@ void Enemy::update() {
 	}
 }
 
+Projectile* Medusa::shootPlayer(float px, float py) {
 
-void Enemy::draw(float scrollX, float scrollY) {
-	animation->draw(x - scrollX, y - scrollY);
+	if (shootTime <= 0) {
+		shootTime = shootCadence;
+		Projectile* projectile = new Projectile("res/enemyfireball.png",x, y,px,py,65,65, game, true);
+		return projectile;
+	}
+	else {
+		return NULL;
+	}
 }
 
-Projectile* Enemy::shootPlayer(float px, float py) {
-	return NULL;
-}
-
-void Enemy::impacted() {
+void Medusa::impacted() {
 	if (state != game->stateDying) {
 		state = game->stateDying;
+		shootTime = 500;
 	}
 }

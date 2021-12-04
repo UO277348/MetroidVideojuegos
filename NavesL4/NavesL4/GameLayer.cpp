@@ -96,8 +96,8 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		space->addDynamicActor(enemy);
 		break;
 	}
-	case 'Z': {
-		Enemy* enemy = new Zombie(x, y, game);
+	case 'M': {
+		Enemy* enemy = new Medusa(x, y, game);
 		// modificación para empezar a contar desde el suelo.
 		enemy->y = enemy->y - enemy->height / 2;
 		enemies.push_back(enemy);
@@ -240,7 +240,7 @@ void GameLayer::update() {
 	player->update();
 	for (auto const& enemy : enemies) {
 		enemy->update();
-		Projectile* newProjectile = enemy->shootPlayer();
+		Projectile* newProjectile = enemy->shootPlayer(player->x, player->y);
 		if (newProjectile != NULL) {
 			space->addDynamicActor(newProjectile);
 			projectiles.push_back(newProjectile);
@@ -294,7 +294,7 @@ void GameLayer::update() {
 
 	for (auto const& enemy : enemies) {
 		for (auto const& projectile : projectiles) {
-			if (enemy->isOverlap(projectile) && !projectile->enemyShot && enemy->vidas == 1 && !enemy->saltoEncima) {
+			if (enemy->isOverlap(projectile) && !projectile->enemyShot && enemy->vidas <= 1 && !enemy->saltoEncima) {
 				bool pInList = std::find(deleteProjectiles.begin(),
 					deleteProjectiles.end(),
 					projectile) != deleteProjectiles.end();
