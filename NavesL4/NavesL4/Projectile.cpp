@@ -9,7 +9,7 @@ Projectile::Projectile(float x, float y, Game* game) :
 }
 
 Projectile::Projectile(float x, float y, float mx, float my, Game* game) :
-	Actor("res/disparo_jugador.png", x, y, 20, 20, game) {
+	Actor("res/disparo_jugador.png", x, y, 30, 30, game) {
 	vx = mx-x;
 	vy = my-y; // La gravedad inicial es 1
 
