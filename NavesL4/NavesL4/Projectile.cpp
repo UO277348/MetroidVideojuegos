@@ -5,7 +5,7 @@ Projectile::Projectile(float x, float y, Game* game) :
 	vx = 9;
 	vy = 0; // La gravedad inicial es 1
 	this->enemyShot = false;
-	this->enemyShot = false;
+	gravityEffect = false;
 }
 
 Projectile::Projectile(float x, float y, float mx, float my, Game* game) :
@@ -25,7 +25,7 @@ Projectile::Projectile(string filename, float x, float y, Game* game, bool enemy
 	vx = 9;
 	vy = 0; // La gravedad inicial es 1
 	this->enemyShot = enemyShot;
-	this->enemyShot = false;
+	gravityEffect = false;
 }
 
 void Projectile::update() {
