@@ -72,3 +72,8 @@ void Enemy::impacted() {
 		state = game->stateDying;
 	}
 }
+
+void Enemy::setPlayerCoords(int px, int py) {
+	playerX = px;
+	playerY = py;
+}

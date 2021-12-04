@@ -8,6 +8,7 @@
 #include "Minion.h"
 #include "Medusa.h"
 #include "Ridley.h"
+#include "EnemigoTP.h"
 #include "Recolectable.h"
 #include "Projectile.h"
 #include "Text.h"

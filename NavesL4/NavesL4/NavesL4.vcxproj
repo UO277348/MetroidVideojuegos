@@ -165,6 +165,7 @@
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="BackgroundTile.cpp" />
+    <ClCompile Include="EnemigoTP.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Minion.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="Audio.h" />
     <ClInclude Include="Background.h" />
     <ClInclude Include="BackgroundTile.h" />
+    <ClInclude Include="EnemigoTP.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Minion.h" />
     <ClInclude Include="Game.h" />

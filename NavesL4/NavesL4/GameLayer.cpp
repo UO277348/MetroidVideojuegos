@@ -104,6 +104,14 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		space->addDynamicActor(enemy);
 		break;
 	}
+	case 'T': {
+		Enemy* enemy = new EnemigoTP(x, y, game);
+		// modificación para empezar a contar desde el suelo.
+		enemy->y = enemy->y - enemy->height / 2;
+		enemies.push_back(enemy);
+		space->addDynamicActor(enemy);
+		break;
+	}
 	case 'V': {
 		Recolectable* r = new Recolectable(x, y, game);
 		// modificación para empezar a contar desde el suelo.
@@ -245,6 +253,8 @@ void GameLayer::update() {
 			space->addDynamicActor(newProjectile);
 			projectiles.push_back(newProjectile);
 		}
+
+		enemy->setPlayerCoords(player->x, player->y);
 	}
 	for (auto const& projectile : projectiles) {
 		projectile->update();
