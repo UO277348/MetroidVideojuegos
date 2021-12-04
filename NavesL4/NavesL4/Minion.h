@@ -9,7 +9,7 @@ class Minion : public Enemy
 {
 public:
 	Minion(float x, float y, Game* game);
-	void update();
+	void update() override;
 
 	int orientation;
 	Animation* aMovingRight = nullptr;

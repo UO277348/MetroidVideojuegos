@@ -88,6 +88,14 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		space->addDynamicActor(enemy);
 		break;
 	}
+	case 'R': {
+		Enemy* enemy = new Ridley(x, y, game);
+		// modificación para empezar a contar desde el suelo.
+		enemy->y = enemy->y - enemy->height / 2;
+		enemies.push_back(enemy);
+		space->addDynamicActor(enemy);
+		break;
+	}
 	case 'Z': {
 		Enemy* enemy = new Zombie(x, y, game);
 		// modificación para empezar a contar desde el suelo.
