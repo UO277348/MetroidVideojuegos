@@ -78,7 +78,7 @@ Projectile* Medusa::shootPlayer(float px, float py) {
 
 	if (shootTime <= 0) {
 		shootTime = shootCadence;
-		Projectile* projectile = new Projectile("res/enemyfireball.png",x, y,px,py,65,65, game, true);
+		Projectile* projectile = new Projectile("res/enemyfireball.png",x, y,px,py,30,30, game, true);
 		return projectile;
 	}
 	else {
