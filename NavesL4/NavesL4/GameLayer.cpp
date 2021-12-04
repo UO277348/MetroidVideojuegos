@@ -235,11 +235,6 @@ void GameLayer::update() {
 		init();
 	}*/
 
-	// Jugador se cae
-	if (player->y > HEIGHT + 80) {
-		init();
-	}
-
 	space->update();
 	background->update();
 	player->update();

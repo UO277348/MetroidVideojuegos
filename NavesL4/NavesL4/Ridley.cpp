@@ -77,7 +77,7 @@ Projectile* Ridley::shootPlayer() {
 
 	if (shootTime <= 0) {
 		shootTime = shootCadence;
-		Projectile* projectile = new Projectile("res/enemyfireball.png", x, y, game, true);
+		Projectile* projectile = new Projectile("res/disparo_enemigo.png", x, y, game, true);
 		projectile->vx = projectile->vx * -1; // Invertir
 		return projectile;
 	}

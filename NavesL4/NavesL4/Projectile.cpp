@@ -28,6 +28,14 @@ Projectile::Projectile(string filename, float x, float y, Game* game, bool enemy
 	gravityEffect = false;
 }
 
+Projectile::Projectile(string filename, float x, float y, float fileWidth, float fileHeight, Game* game, bool enemyShot) :
+	Actor(filename, x, y, fileWidth, fileHeight, game) {
+	vx = 9;
+	vy = 0; // La gravedad inicial es 1
+	this->enemyShot = enemyShot;
+	gravityEffect = false;
+}
+
 void Projectile::update() {
 	vy = vy; // La gravedad suma 1 en cada actualización restamos para anularla 
 }
