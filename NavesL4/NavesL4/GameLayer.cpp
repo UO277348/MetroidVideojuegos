@@ -570,17 +570,17 @@ void GameLayer::draw() {
 	buttonPause->draw();
 
 	if (sala0 != nullptr) {
-		sala0->draw();
+		sala0->draw(scrollX, scrollY);
 	}
 	if (sala2 != nullptr) {
-		sala2->draw();
+		sala2->draw(scrollX, scrollY);
 	}
 
 	if (sala3 != nullptr) {
-		sala3->draw();
+		sala3->draw(scrollX, scrollY);
 	}
 	if (sala4 != nullptr) {
-		sala4->draw();
+		sala4->draw(scrollX, scrollY);
 	}
 
 	// 
