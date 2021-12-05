@@ -23,7 +23,8 @@ Ridley::Ridley(float x, float y, Game* game)
 
 	shootTime = 5;
 	shootCadence = 1;
-	vidas = 1;
+	//vidas = 1;
+	vidas = 25;
 }
 
 void Ridley::update() {

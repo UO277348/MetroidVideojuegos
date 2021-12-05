@@ -24,6 +24,7 @@ void GameLayer::init() {
 	sala2 = nullptr;
 	sala3 = nullptr;
 	sala4 = nullptr;
+	//game->currentLevel = 3;
 	/*buttonJump = new Actor("res/boton_salto.png", WIDTH * 0.9, HEIGHT * 0.55, 100, 100, game);
 	buttonShoot = new Actor("res/boton_disparo.png", WIDTH * 0.75, HEIGHT * 0.83, 100, 100, game);*/
 
@@ -31,8 +32,12 @@ void GameLayer::init() {
 	scrollX = 0;
 	scrollY = 0;
 	tiles.clear();
-
-	audioBackground = new Audio("res/sonidos/musica_ambiente.mp3", true);
+	if (game->currentLevel == 3) {
+		audioBackground = new Audio("res/sonidos/musica_boss.mp3", true);
+	}
+	else {
+		audioBackground = new Audio("res/sonidos/musica_ambiente.mp3", true);
+	}
 	audioBackground->play();
 
 	if (player == nullptr)
@@ -64,7 +69,7 @@ void GameLayer::init() {
 	projectiles.clear(); // Vaciar por si reiniciamos el juego
 	recolectables.clear();
 	tilesDest.clear();
-	//game->currentLevel = 3;
+	
 	loadMap("res/" + to_string(game->currentLevel) + ".txt");
 }
 
