@@ -61,10 +61,13 @@ public:
 	Audio* audioBackground;
 	Text* textVidas;
 	int vidas;
+	Text* textLlaves;
+	int llaves;
 	int newEnemyTime = 0;
 	Player* player;
 	Background* background;
 	Actor* backgroundPoints;
+	Actor* backgroundLlaves;
 	list<Enemy*> enemies;
 	list<Projectile*> projectiles;
 	list<Recolectable*> recolectables;

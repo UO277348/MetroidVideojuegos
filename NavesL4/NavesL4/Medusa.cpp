@@ -5,8 +5,8 @@ Medusa::Medusa(float x, float y, Game* game)
 
 	state = game->stateMoving;
 
-	aDying = new Animation("res/enemigo_morir.png", width, height,
-		187, 60, 15, 3, false, game);
+	aDying = new Animation("res/enemigo_voladorDead.png", width, height,
+		746, 41, 8, 14, false, game);
 
 	aMoving = new Animation("res/enemigo_volador.png", width, height,
 		746, 41, 8, 14, true, game);

@@ -6,10 +6,10 @@ EnemigoTP::EnemigoTP(float x, float y, Game* game)
 	state = game->stateMoving;
 	orientation = game->orientationRight;
 
-	aDying = new Animation("res/enemigo_morir.png", width, height,
-		187, 60, 15, 1, false, game);
-	aDyingRight = new Animation("res/enemigo_morir.png", width, height,
-		187, 60, 15, 1, false, game);
+	aDying = new Animation("res/enemigo_tpDead.png", width, height,
+		120, 98, 1, 1, false, game);
+	aDyingRight = new Animation("res/enemigo_tp_rightDead.png", width, height,
+		120, 98, 1, 1, false, game);
 
 	aMoving = new Animation("res/enemigo_tp.png", width, height,
 		120, 98, 1, 1, true, game);

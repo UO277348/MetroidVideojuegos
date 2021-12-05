@@ -32,11 +32,17 @@ public:
 	Animation* aRunningLeft;
 	Animation* aShootingRight;
 	Animation* aShootingLeft;
+	Animation* aShootingUpRight;
+	Animation* aShootingUpLeft;
+	Animation* aShootingDownRight;
+	Animation* aShootingDownLeft;
 	Animation* animation; // Referencia a la animación mostrada
 	Audio* audioShoot;
 	int shootCadence = 30;
 	int shootTime = 0;
 	int lastState = 0;
+
+	int pos = 0;
 
 	int shootMode = 1;
 	int llaves = 0;

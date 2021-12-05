@@ -14,6 +14,16 @@ Player::Player(float x, float y, Game* game)
 	aShootingLeft = new Animation("res/jugador/jugador_disparando_izquierda.png",
 		width, height, 160, 77, 1, 2, false, game);
 
+	aShootingUpRight = new Animation("res/jugador/jugador_disparando_arriba_derecha.png",
+		width, height, 160, 77, 5, 2, false, game);
+	aShootingUpLeft = new Animation("res/jugador/jugador_disparando_arriba_izquierda.png",
+		width, height, 160, 77, 5, 2, false, game);
+
+	aShootingDownRight = new Animation("res/jugador/jugador_disparando_abajo_derecha.png",
+		width, height, 160, 77, 5, 2, false, game);
+	aShootingDownLeft = new Animation("res/jugador/jugador_disparando_abajo_izquierda.png",
+		width, height, 160, 77, 5, 2, false, game);
+
 
 	aJumpingRight = new Animation("res/jugador/jugador_saltando_derecha.png",
 		width, height, 350, 77, 15, 5, true, game);
@@ -97,11 +107,41 @@ void Player::update() {
 	}
 	if (state == game->stateShooting) {
 		if (orientation == game->orientationRight) {
-			animation = aShootingRight;
+			if (pos == 1) {
+				animation = aShootingUpLeft;
+			}
+			if (pos == 2) {
+				animation = aShootingDownLeft;
+			}
+			if (pos == 0) {
+				animation = aShootingRight;
+			}
+			if (pos == 3) {
+				animation = aShootingUpRight;
+			}
+			if (pos == 4) {
+				animation = aShootingDownRight;
+			}
 		}
 		if (orientation == game->orientationLeft) {
-			animation = aShootingLeft;
+			if (pos == 1) {
+				animation = aShootingUpLeft;
+			}
+			if (pos == 2) {
+				animation = aShootingDownLeft;
+			}
+			if (pos == 0) {
+				animation = aShootingLeft;
+			}
+			if (pos == 3) {
+				animation = aShootingUpRight;
+			}
+			if (pos == 4) {
+				animation = aShootingDownRight;
+			}
 		}
+
+		pos = 0;
 	}
 	if (state == game->stateMoving) {
 		if (vx != 0) {
@@ -153,9 +193,28 @@ Projectile* Player::shoot(int mx, int my) {
 		shootTime = shootCadence;
 
 		if (mx > x) {
+			if (my > y) {
+				pos = 4;
+			}
+			if (my < y) {
+				pos = 3;
+			}
+			if (my == y) {
+				pos = 0;
+			}
+
 			orientation = game->orientationRight;
 		}
 		if (mx < x) {
+			if (my > y) {
+				pos = 2;
+			}
+			if (my < y) {
+				pos = 1;
+			}
+			if (my == y) {
+				pos = 0;
+			}
 			orientation = game->orientationLeft;
 		}
 

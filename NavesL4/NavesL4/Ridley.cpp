@@ -5,8 +5,8 @@ Ridley::Ridley(float x, float y, Game* game)
 
 	state = game->stateMoving;
 
-	aDying = new Animation("res/enemigo_morir.png", width, height,
-		187, 60, 15, 3, false, game);
+	aDying = new Animation("res/ridleyDead.png", width, height,
+		1400, 175, 1, 8, false, game);
 
 	aMoving = new Animation("res/ridley.png", width, height,
 		1400, 175, 1, 8, true, game);
@@ -23,7 +23,7 @@ Ridley::Ridley(float x, float y, Game* game)
 
 	shootTime = 5;
 	shootCadence = 1;
-	vidas = 25;
+	vidas = 1;
 }
 
 void Ridley::update() {

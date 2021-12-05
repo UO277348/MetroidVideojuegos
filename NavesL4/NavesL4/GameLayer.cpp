@@ -43,10 +43,20 @@ void GameLayer::init() {
 	textVidas = new Text("hola", WIDTH * 0.92, HEIGHT * 0.07, game);
 	textVidas->content = to_string(vidas);
 
+	if (player == nullptr)
+		llaves = 0;
+	else {
+		llaves = player->llaves;
+	}
+	textLlaves = new Text("hola", WIDTH * 0.72, HEIGHT * 0.07, game);
+	textLlaves->content = to_string(llaves);
+
 	
 	background = new Background("res/fondos/fondo.png", WIDTH * 0.5, HEIGHT * 0.5, -1, game);
 	backgroundPoints = new Actor("res/iconos/icono_puntos.png",
 		WIDTH * 0.85, HEIGHT * 0.07, 24, 24, game);
+	backgroundLlaves = new Actor("res/iconos/tp_Boss.png",
+		WIDTH * 0.65, HEIGHT * 0.07, 24, 40, game);
 
 	buttonPause = new Actor("res/iconos/boton_pausa.png", WIDTH * 0.07, HEIGHT * 0.07, 40, 40, game);
 
@@ -54,7 +64,7 @@ void GameLayer::init() {
 	projectiles.clear(); // Vaciar por si reiniciamos el juego
 	recolectables.clear();
 	tilesDest.clear();
-
+	//game->currentLevel = 3;
 	loadMap("res/" + to_string(game->currentLevel) + ".txt");
 }
 
@@ -211,7 +221,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case '4': {
-		sala4 = new Tile("res/tp.png", x, y, 40, 66, game);
+		sala4 = new Tile("res/tp_Boss.png", x, y, 40, 66, game);
 		// modificación para empezar a contar desde el suelo.
 		sala4->y = sala4->y - sala4->height / 2;
 		space->addStaticActor(sala4);
@@ -441,14 +451,15 @@ void GameLayer::update() {
 					deleteProjectiles.push_back(projectile);
 				}
 
+				enemy->impacted();
+
 				if (game->currentLevel == 3) {
 					win = true;
 					player = nullptr;
 					game->currentLevel = 0;
 					init();
+					return;
 				}
-
-				enemy->impacted();
 			}
 			else if (enemy->isOverlap(projectile) && !projectile->enemyShot && enemy->vidas > 1 && !enemy->saltoEncima) {
 				bool pInList = std::find(deleteProjectiles.begin(),
@@ -563,6 +574,8 @@ void GameLayer::update() {
 
 	vidas = player->lifes;
 	textVidas->content = to_string(vidas);
+	llaves = player->llaves;
+	textLlaves->content = to_string(llaves);
 
 	cout << "update GameLayer" << endl;
 }
@@ -624,6 +637,9 @@ void GameLayer::draw() {
 
 	backgroundPoints->draw();
 	textVidas->draw();
+
+	backgroundLlaves->draw();
+	textLlaves->draw();
 
 
 	buttonPause->draw();
