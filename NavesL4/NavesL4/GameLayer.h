@@ -10,6 +10,7 @@
 #include "Ridley.h"
 #include "EnemigoTP.h"
 #include "Recolectable.h"
+#include "Arma.h"
 #include "Projectile.h"
 #include "Text.h"
 #include "Tile.h"
@@ -54,15 +55,12 @@ public:
 	
 
 	Audio* audioBackground;
-	Text* textPoints;
-	int points;
-	Text* textRecolectables;
-	int pointsRecolestables;
+	Text* textVidas;
+	int vidas;
 	int newEnemyTime = 0;
 	Player* player;
 	Background* background;
 	Actor* backgroundPoints;
-	Actor* backgroundRecolectables;
 	list<Enemy*> enemies;
 	list<Projectile*> projectiles;
 	list<Recolectable*> recolectables;
@@ -77,6 +75,9 @@ public:
 	int mouseX = 0;
 	int mouseY = 0;
 
-
+	Tile* sala0;
+	Tile* sala2;
+	Tile* sala3;
+	Tile* sala4;
 };
 

@@ -164,7 +164,7 @@ Projectile* Player::shoot(int mx, int my) {
 			return projectile;
 		}
 		if (shootMode == 2) {
-			Projectile* projectile = new Projectile(x, y, mx, my, game);
+			Projectile* projectile = new ProyecilSecundario("res/moneda.png",x, y, mx, my,40,40, game);
 			return projectile;
 		}
 	}

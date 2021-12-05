@@ -2,6 +2,7 @@
 
 #include "Actor.h"
 #include "Projectile.h"
+#include "ProyecilSecundario.h"
 #include "Enemy.h"
 #include "Audio.h"
 #include "Animation.h" // incluir animacion 
@@ -38,7 +39,7 @@ public:
 	int lastState = 0;
 
 	int shootMode = 1;
-
+	int llaves = 0;
 	bool secondaryShoot = false;
 };
 
