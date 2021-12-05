@@ -41,6 +41,8 @@ void GameLayer::init() {
 	backgroundRecolectables = new Actor("res/iconos/icono_recolectable.png",
 		WIDTH * 0.65, HEIGHT * 0.07, 40, 40, game);
 
+	buttonPause = new Actor("res/iconos/boton_pausa.png", WIDTH * 0.07, HEIGHT * 0.07, 40, 40, game);
+
 	enemies.clear(); // Vaciar por si reiniciamos el juego
 	projectiles.clear(); // Vaciar por si reiniciamos el juego
 	recolectables.clear();
@@ -329,7 +331,7 @@ void GameLayer::update() {
 					deleteProjectiles.push_back(projectile);
 				}
 
-				enemy->vidas--;
+				enemy->vidas-=projectile->daño;
 			}
 
 			if (player->isOverlap(projectile) && projectile->enemyShot) {
@@ -365,7 +367,7 @@ void GameLayer::update() {
 			if (!cajaInList) {
 				deleteRecos.push_back(caja);
 
-				player->lifes++;
+				caja->accion(player);
 				pointsRecolestables++;
 				textRecolectables->content = to_string(pointsRecolestables);
 			}
@@ -467,6 +469,8 @@ void GameLayer::draw() {
 	backgroundRecolectables->draw();
 	textRecolectables->draw();
 
+	buttonPause->draw();
+
 	// 
 	if (pause) {
 		message->draw();
@@ -477,9 +481,14 @@ void GameLayer::draw() {
 
 void GameLayer::keysToControls(SDL_Event event) {
 	if (event.type == SDL_MOUSEBUTTONDOWN) {
-		controlShoot = true;
-
 		SDL_GetMouseState(&mouseX, &mouseY);
+
+		if (buttonPause->containsPoint(mouseX, mouseY)) {
+			pause = true;
+		}
+		else {
+			controlShoot = true;
+		}
 	}
 	if (event.type == SDL_MOUSEBUTTONUP) {
 		controlShoot = false;
@@ -493,7 +502,10 @@ void GameLayer::keysToControls(SDL_Event event) {
 			game->loopActive = false;
 			break;
 		case SDLK_1:
-			game->scale();
+			player->shootMode=1;
+			break;
+		case SDLK_2:
+			player->shootMode = 2;
 			break;
 		case SDLK_d: // derecha
 			controlMoveX = 1;

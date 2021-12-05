@@ -14,5 +14,6 @@ public:
 
 	bool enemyShot;
 	void update();
+	int daño = 1;
 };
 

@@ -21,3 +21,7 @@ void Recolectable::draw(float scrollX, float scrollY) {
 	animation->draw(x - scrollX, y - scrollY);
 
 }
+
+void Recolectable::accion(Player* p) {
+	p->lifes++;
+}

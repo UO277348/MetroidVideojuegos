@@ -159,11 +159,14 @@ Projectile* Player::shoot(int mx, int my) {
 			orientation = game->orientationLeft;
 		}
 
-		Projectile* projectile = new Projectile(x, y, mx, my, game);
-		//if (orientation == game->orientationLeft) {
-		//	projectile->vx = projectile->vx * -1; // Invertir
-		//}
-		return projectile;
+		if (shootMode == 1) {
+			Projectile* projectile = new Projectile(x, y, mx, my, game);
+			return projectile;
+		}
+		if (shootMode == 2) {
+			Projectile* projectile = new Projectile(x, y, mx, my, game);
+			return projectile;
+		}
 	}
 	else {
 		return NULL;

@@ -43,6 +43,7 @@ public:
 	Pad* pad;
 	Actor* buttonJump;
 	Actor* buttonShoot;
+	Actor* buttonPause;
 
 	Tile* cup; // Elemento de final de nivel
 	Space* space;
