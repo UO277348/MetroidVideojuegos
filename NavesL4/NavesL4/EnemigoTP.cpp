@@ -23,6 +23,12 @@ EnemigoTP::EnemigoTP(float x, float y, Game* game)
 	vx = vxIntelligence;
 
 	vidas = 6;
+
+	tpTime = 10;
+	tpCadence = 50;
+
+	shootTime = 10;
+	shootCadence = 25;
 }
 
 void EnemigoTP::update() {
@@ -34,8 +40,18 @@ void EnemigoTP::update() {
 			state = game->stateDead;
 		}
 	}
+	if (tpTime <= 0) {
+		tpTime = tpCadence;
+		calcularCoords();
+	}
+	else 
+		tpTime--;
 
-	calcularCoords();
+	if (shootTime <= 0) {
+		shootTime = shootCadence;
+	}
+	else
+		shootTime--;
 
 	if (x < playerX) {
 		orientation = game->orientationRight;
@@ -63,6 +79,31 @@ void EnemigoTP::update() {
 }
 
 void EnemigoTP::calcularCoords() {
-	x = playerX + 100;
+
+	int random = rand() % 100;
+
+	if(random<50)
+		x = playerX + 200;
+	else
+		x = playerX - 200;
 	y = playerY-10;
+}
+
+Projectile* EnemigoTP::shootPlayer(float px, float py) {
+
+	if (shootTime <= 0) {
+		shootTime = shootCadence;
+		Projectile* projectile = new Projectile("res/disparo_enemigo.png", x, y, px, py, 40, 40, game, true);
+		return projectile;
+	}
+	else {
+		return NULL;
+	}
+}
+
+void EnemigoTP::impacted() {
+	if (state != game->stateDying) {
+		state = game->stateDying;
+		shootTime = 500;
+	}
 }
