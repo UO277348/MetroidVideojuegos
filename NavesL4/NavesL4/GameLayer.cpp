@@ -14,7 +14,10 @@ GameLayer::GameLayer(Game* game)
 
 void GameLayer::init() {
 	pad = new Pad(WIDTH * 0.15, HEIGHT * 0.80, game);
-
+	sala0 = nullptr;
+	sala2 = nullptr;
+	sala3 = nullptr;
+	sala4 = nullptr;
 	/*buttonJump = new Actor("res/boton_salto.png", WIDTH * 0.9, HEIGHT * 0.55, 100, 100, game);
 	buttonShoot = new Actor("res/boton_disparo.png", WIDTH * 0.75, HEIGHT * 0.83, 100, 100, game);*/
 
@@ -26,24 +29,25 @@ void GameLayer::init() {
 	audioBackground = new Audio("res/sonidos/musica_ambiente.mp3", true);
 	audioBackground->play();
 
-	points = 0;
-	textPoints = new Text("hola", WIDTH * 0.92, HEIGHT * 0.07, game);
-	textPoints->content = to_string(points);
-
-	pointsRecolestables = 0;
-	textRecolectables = new Text("hola", WIDTH * 0.72, HEIGHT * 0.07, game);
-	textRecolectables->content = to_string(pointsRecolestables);
+	if (player == nullptr)
+		vidas = 0;
+	else {
+		vidas = player->lifes;
+	}
+	textVidas = new Text("hola", WIDTH * 0.92, HEIGHT * 0.07, game);
+	textVidas->content = to_string(vidas);
 
 	
 	background = new Background("res/fondos/fondo.png", WIDTH * 0.5, HEIGHT * 0.5, -1, game);
 	backgroundPoints = new Actor("res/iconos/icono_puntos.png",
 		WIDTH * 0.85, HEIGHT * 0.07, 24, 24, game);
-	backgroundRecolectables = new Actor("res/iconos/icono_recolectable.png",
-		WIDTH * 0.65, HEIGHT * 0.07, 40, 40, game);
+
+	buttonPause = new Actor("res/iconos/boton_pausa.png", WIDTH * 0.07, HEIGHT * 0.07, 40, 40, game);
 
 	enemies.clear(); // Vaciar por si reiniciamos el juego
 	projectiles.clear(); // Vaciar por si reiniciamos el juego
 	recolectables.clear();
+	tilesDest.clear();
 
 	loadMap("res/" + to_string(game->currentLevel) + ".txt");
 }
@@ -86,14 +90,50 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		enemy->y = enemy->y - enemy->height / 2;
 		enemies.push_back(enemy);
 		space->addDynamicActor(enemy);
+
+		Tile* tile = new BackgroundTile("res/tiles/background_lvl1.png", x, y, game);
+		tile->y = tile->y - tile->height / 2;
+		tiles.push_back(tile);
+		space->addStaticActor(tile);
 		break;
 	}
-	case 'Z': {
-		Enemy* enemy = new Zombie(x, y, game);
+	case 'R': {
+		Enemy* enemy = new Ridley(x, y, game);
 		// modificación para empezar a contar desde el suelo.
 		enemy->y = enemy->y - enemy->height / 2;
 		enemies.push_back(enemy);
 		space->addDynamicActor(enemy);
+
+		Tile* tile = new BackgroundTile("res/tiles/background_lvl1.png", x, y, game);
+		tile->y = tile->y - tile->height / 2;
+		tiles.push_back(tile);
+		space->addStaticActor(tile);
+		break;
+	}
+	case 'M': {
+		Enemy* enemy = new Medusa(x, y, game);
+		// modificación para empezar a contar desde el suelo.
+		enemy->y = enemy->y - enemy->height / 2;
+		enemies.push_back(enemy);
+		space->addDynamicActor(enemy);
+
+		Tile* tile = new BackgroundTile("res/tiles/background_lvl1.png", x, y, game);
+		tile->y = tile->y - tile->height / 2;
+		tiles.push_back(tile);
+		space->addStaticActor(tile);
+		break;
+	}
+	case 'T': {
+		Enemy* enemy = new EnemigoTP(x, y, game);
+		// modificación para empezar a contar desde el suelo.
+		enemy->y = enemy->y - enemy->height / 2;
+		enemies.push_back(enemy);
+		space->addDynamicActor(enemy);
+
+		Tile* tile = new BackgroundTile("res/tiles/background_lvl1.png", x, y, game);
+		tile->y = tile->y - tile->height / 2;
+		tiles.push_back(tile);
+		space->addStaticActor(tile);
 		break;
 	}
 	case 'V': {
@@ -102,18 +142,73 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		r->y = r->y - r->height / 2;
 		recolectables.push_back(r);
 		space->addDynamicActor(r);
+
+		Tile* tile = new BackgroundTile("res/tiles/background_lvl1.png", x, y, game);
+		tile->y = tile->y - tile->height / 2;
+		tiles.push_back(tile);
+		space->addStaticActor(tile);
+		break;
+	}
+	case 'S': {
+		Recolectable* r = new Arma("res/moneda.png",x, y,40,40, game);
+		// modificación para empezar a contar desde el suelo.
+		r->y = r->y - r->height / 2;
+		recolectables.push_back(r);
+		space->addDynamicActor(r);
+
+		Tile* tile = new BackgroundTile("res/tiles/background_lvl1.png", x, y, game);
+		tile->y = tile->y - tile->height / 2;
+		tiles.push_back(tile);
+		space->addStaticActor(tile);
 		break;
 	}
 	case '1': {
-		player = new Player(x, y, game);
-		// modificación para empezar a contar desde el suelo.
-		player->y = player->y - player->height / 2;
+		if (player == nullptr) {
+
+			player = new Player(x, y, game);
+			// modificación para empezar a contar desde el suelo.
+			player->y = player->y - player->height / 2;
+		}
+		else {
+			player->x = x;
+			player->y = y;
+			player->y = player->y - player->height / 2;
+		}
+		
 		space->addDynamicActor(player);
 
 		Tile* tile = new BackgroundTile("res/tiles/background_lvl1.png", x, y, game);
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
 		space->addStaticActor(tile);
+		break;
+	}
+	case '0': {
+		sala0 = new Tile("res/tp.png", x, y, 40, 66, game);
+		// modificación para empezar a contar desde el suelo.
+		sala0->y = sala0->y - sala0->height / 2;
+		space->addStaticActor(sala0);
+		break;
+	}
+	case '2': {
+		sala2 = new Tile("res/tp.png", x, y, 40, 66, game);
+		// modificación para empezar a contar desde el suelo.
+		sala2->y = sala2->y - sala2->height / 2;
+		space->addStaticActor(sala2);
+		break;
+	}
+	case '3': {
+		sala3 = new Tile("res/tp.png", x, y, 40, 66, game);
+		// modificación para empezar a contar desde el suelo.
+		sala3->y = sala3->y - sala3->height / 2;
+		space->addStaticActor(sala3);
+		break;
+	}
+	case '4': {
+		sala4 = new Tile("res/tp.png", x, y, 40, 66, game);
+		// modificación para empezar a contar desde el suelo.
+		sala4->y = sala4->y - sala4->height / 2;
+		space->addStaticActor(sala4);
 		break;
 	}
 	case '#': {
@@ -176,12 +271,12 @@ void GameLayer::processControls() {
 		controlContinue = false;
 	}
 	if (controlShoot) {
-		Projectile* newProjectile = player->shoot();
+		//calculateScroll();
+		Projectile* newProjectile = player->shoot(mouseX+scrollX, mouseY+scrollY);
 		if (newProjectile != NULL) {
 			space->addDynamicActor(newProjectile);
 			projectiles.push_back(newProjectile);
 		}
-
 	}
 
 	// Eje X
@@ -226,10 +321,31 @@ void GameLayer::update() {
 		pause = true;
 		init();
 	}*/
+	if (sala0 != nullptr) {
+		if (sala0->isOverlap(player)) {
+			game->currentLevel = 0;
+			init();
+		}
+	}
+	if (sala2 != nullptr) {
+		if (sala2->isOverlap(player)) {
+			game->currentLevel = 1;
+			
+			init();
+		}
+	}
 
-	// Jugador se cae
-	if (player->y > HEIGHT + 80) {
-		init();
+	if (sala3 != nullptr) {
+		if (sala3->isOverlap(player)) {
+			game->currentLevel = 2;
+			init();
+		}
+	}
+	if (sala4 != nullptr) {
+		if (sala4->isOverlap(player) && player->llaves == 2) {
+			game->currentLevel = 3;
+			init();
+		}
 	}
 
 	space->update();
@@ -237,11 +353,13 @@ void GameLayer::update() {
 	player->update();
 	for (auto const& enemy : enemies) {
 		enemy->update();
-		Projectile* newProjectile = enemy->shootPlayer();
+		Projectile* newProjectile = enemy->shootPlayer(player->x, player->y);
 		if (newProjectile != NULL) {
 			space->addDynamicActor(newProjectile);
 			projectiles.push_back(newProjectile);
 		}
+
+		enemy->setPlayerCoords(player->x, player->y);
 	}
 	for (auto const& projectile : projectiles) {
 		projectile->update();
@@ -256,12 +374,12 @@ void GameLayer::update() {
 		if (player->isOverlap(enemy) && enemy->state != game->stateDying && enemy->state != game->stateDead) {
 			if (player->saltoEncima(enemy)) {
 				enemy->impacted();
-				points++;
-				textPoints->content = to_string(points);
 			}
 			else{
 				player->loseLife();
 				if (player->lifes <= 0) {
+					player = nullptr;
+					game->currentLevel = 0;
 					init();
 					return;
 				}
@@ -291,7 +409,7 @@ void GameLayer::update() {
 
 	for (auto const& enemy : enemies) {
 		for (auto const& projectile : projectiles) {
-			if (enemy->isOverlap(projectile) && !projectile->enemyShot && enemy->vidas == 1 && !enemy->saltoEncima) {
+			if (enemy->isOverlap(projectile) && !projectile->enemyShot && enemy->vidas <= 1 && !enemy->saltoEncima) {
 				bool pInList = std::find(deleteProjectiles.begin(),
 					deleteProjectiles.end(),
 					projectile) != deleteProjectiles.end();
@@ -302,10 +420,6 @@ void GameLayer::update() {
 
 
 				enemy->impacted();
-				points++;
-				textPoints->content = to_string(points);
-
-
 			}
 			else if (enemy->isOverlap(projectile) && !projectile->enemyShot && enemy->vidas > 1 && !enemy->saltoEncima) {
 				bool pInList = std::find(deleteProjectiles.begin(),
@@ -316,7 +430,7 @@ void GameLayer::update() {
 					deleteProjectiles.push_back(projectile);
 				}
 
-				enemy->vidas--;
+				enemy->vidas-=projectile->daño;
 			}
 
 			if (player->isOverlap(projectile) && projectile->enemyShot) {
@@ -328,6 +442,20 @@ void GameLayer::update() {
 			}
 		}
 	}
+	for (auto const& tile : tiles) {
+		for (auto const& projectile : projectiles) {
+			if (tile->isOverlap(projectile) && tile->isBackgraound==false) {
+				bool pInList = std::find(deleteProjectiles.begin(),
+					deleteProjectiles.end(),
+					projectile) != deleteProjectiles.end();
+
+				if (!pInList) {
+					deleteProjectiles.push_back(projectile);
+				}
+			}
+		}
+	}
+
 
 	for (auto const& caja : recolectables) {
 		if (player->isOverlap(caja)) {
@@ -338,9 +466,7 @@ void GameLayer::update() {
 			if (!cajaInList) {
 				deleteRecos.push_back(caja);
 
-				player->lifes++;
-				pointsRecolestables++;
-				textRecolectables->content = to_string(pointsRecolestables);
+				caja->accion(player);
 			}
 		}
 	}
@@ -375,6 +501,9 @@ void GameLayer::update() {
 		space->removeDynamicActor(delCaja);
 	}
 	deleteRecos.clear();
+
+	vidas = player->lifes;
+	textVidas->content = to_string(vidas);
 
 	cout << "update GameLayer" << endl;
 }
@@ -435,10 +564,24 @@ void GameLayer::draw() {
 	}
 
 	backgroundPoints->draw();
-	textPoints->draw();
+	textVidas->draw();
 
-	backgroundRecolectables->draw();
-	textRecolectables->draw();
+
+	buttonPause->draw();
+
+	if (sala0 != nullptr) {
+		sala0->draw(scrollX, scrollY);
+	}
+	if (sala2 != nullptr) {
+		sala2->draw(scrollX, scrollY);
+	}
+
+	if (sala3 != nullptr) {
+		sala3->draw(scrollX, scrollY);
+	}
+	if (sala4 != nullptr) {
+		sala4->draw(scrollX, scrollY);
+	}
 
 	// 
 	if (pause) {
@@ -450,9 +593,19 @@ void GameLayer::draw() {
 
 void GameLayer::keysToControls(SDL_Event event) {
 	if (event.type == SDL_MOUSEBUTTONDOWN) {
-		controlContinue = true;
-	}
+		SDL_GetMouseState(&mouseX, &mouseY);
 
+		if (buttonPause->containsPoint(mouseX, mouseY)) {
+			pause = true;
+		}
+		else {
+			controlShoot = true;
+		}
+	}
+	if (event.type == SDL_MOUSEBUTTONUP) {
+		controlShoot = false;
+	}
+	
 	if (event.type == SDL_KEYDOWN) {
 		int code = event.key.keysym.sym;
 		// Pulsada
@@ -461,7 +614,12 @@ void GameLayer::keysToControls(SDL_Event event) {
 			game->loopActive = false;
 			break;
 		case SDLK_1:
-			game->scale();
+			player->shootMode=1;
+			break;
+		case SDLK_2:
+			if (player->secondaryShoot == true) {
+				player->shootMode = 2;
+			}
 			break;
 		case SDLK_d: // derecha
 			controlMoveX = 1;
@@ -476,7 +634,7 @@ void GameLayer::keysToControls(SDL_Event event) {
 			controlMoveY = 1;
 			break;
 		case SDLK_SPACE: // dispara
-			controlShoot = true;
+			controlContinue = true;
 			break;
 		case SDLK_p: // dispara
 			pause = true;
@@ -507,9 +665,6 @@ void GameLayer::keysToControls(SDL_Event event) {
 			if (controlMoveY == 1) {
 				controlMoveY = 0;
 			}
-			break;
-		case SDLK_SPACE: // dispara
-			controlShoot = false;
 			break;
 		case SDLK_p: // dispara
 			pause = false;

@@ -78,7 +78,7 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Archivos de origen\actores</Filter>
     </ClCompile>
-    <ClCompile Include="Zombie.cpp">
+    <ClCompile Include="Medusa.cpp">
       <Filter>Archivos de origen\actores</Filter>
     </ClCompile>
     <ClCompile Include="Recolectable.cpp">
@@ -88,6 +88,18 @@
       <Filter>Archivos de origen\actores</Filter>
     </ClCompile>
     <ClCompile Include="TileDestruible.cpp">
+      <Filter>Archivos de origen\actores</Filter>
+    </ClCompile>
+    <ClCompile Include="Ridley.cpp">
+      <Filter>Archivos de origen\actores</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemigoTP.cpp">
+      <Filter>Archivos de origen\actores</Filter>
+    </ClCompile>
+    <ClCompile Include="Arma.cpp">
+      <Filter>Archivos de origen\actores</Filter>
+    </ClCompile>
+    <ClCompile Include="ProyecilSecundario.cpp">
       <Filter>Archivos de origen\actores</Filter>
     </ClCompile>
   </ItemGroup>
@@ -140,7 +152,7 @@
     <ClInclude Include="Enemy.h">
       <Filter>Archivos de encabezado\actores</Filter>
     </ClInclude>
-    <ClInclude Include="Zombie.h">
+    <ClInclude Include="Medusa.h">
       <Filter>Archivos de encabezado\actores</Filter>
     </ClInclude>
     <ClInclude Include="Recolectable.h">
@@ -150,6 +162,18 @@
       <Filter>Archivos de encabezado\actores</Filter>
     </ClInclude>
     <ClInclude Include="TileDestruible.h">
+      <Filter>Archivos de encabezado\actores</Filter>
+    </ClInclude>
+    <ClInclude Include="Ridley.h">
+      <Filter>Archivos de encabezado\actores</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemigoTP.h">
+      <Filter>Archivos de encabezado\actores</Filter>
+    </ClInclude>
+    <ClInclude Include="Arma.h">
+      <Filter>Archivos de encabezado\actores</Filter>
+    </ClInclude>
+    <ClInclude Include="ProyecilSecundario.h">
       <Filter>Archivos de encabezado\actores</Filter>
     </ClInclude>
   </ItemGroup>

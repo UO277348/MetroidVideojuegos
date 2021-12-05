@@ -2,6 +2,7 @@
 
 #include "Actor.h"
 #include "Projectile.h"
+#include "ProyecilSecundario.h"
 #include "Enemy.h"
 #include "Audio.h"
 #include "Animation.h" // incluir animacion 
@@ -10,7 +11,7 @@ class Player : public Actor
 {
 public:
 	Player(float x, float y, Game* game);
-	Projectile* shoot();
+	Projectile* shoot(int mx, int my);
 	bool saltoEncima(Enemy* enemy);
 	void update();
 	void jump();
@@ -36,5 +37,9 @@ public:
 	int shootCadence = 30;
 	int shootTime = 0;
 	int lastState = 0;
+
+	int shootMode = 1;
+	int llaves = 0;
+	bool secondaryShoot = false;
 };
 

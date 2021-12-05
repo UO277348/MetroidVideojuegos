@@ -11,6 +11,7 @@ public:
 	void draw(float scrollX = 0, float scrollY = 0) override; // Va a sobrescribir
 	virtual void update();
 	virtual void impacted(); // Recibe impacto y pone animación de morir
+	void setPlayerCoords(int px, int py);
 
 	Animation* aDying = aDying;
 	Animation* aMoving = nullptr;
@@ -24,7 +25,10 @@ public:
 	int shootTime = -1;
 	int volarCadence = 0;
 	int volarTime = -1;
-	virtual Projectile* shootPlayer();
+	virtual Projectile* shootPlayer(float px, float py);
+
+	int playerX;
+	int playerY;
 
 	bool saltoEncima = false;
 };
