@@ -186,7 +186,7 @@ void Player::draw(float scrollX, float scrollY) {
 
 void Player::jump() {
 	if (!onAir) {
-		vy = -15;
+		vy = -17;
 		onAir = true;
 	}
 }

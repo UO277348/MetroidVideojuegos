@@ -7,6 +7,12 @@ GameLayer::GameLayer(Game* game)
 	message = new Actor("res/fondos/mensaje_como_jugar.png", WIDTH * 0.5, HEIGHT * 0.5,
 		WIDTH, HEIGHT, game);
 
+	messageWin = new Actor("res/fondos/mensaje_ganar.png", WIDTH * 0.5, HEIGHT * 0.5,
+		WIDTH, HEIGHT, game);
+
+	messageLose = new Actor("res/fondos/mensaje_perder.png", WIDTH * 0.5, HEIGHT * 0.5,
+		WIDTH, HEIGHT, game);
+
 	gamePad = SDL_GameControllerOpen(0);
 	init();
 }
@@ -240,6 +246,19 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		space->addStaticActor(caja);
 		break;
 	}
+	case 'Z': {
+		Tile* tile = new BackgroundTile("res/tiles/background_lvl1.png", x, y, game);
+		tile->y = tile->y - tile->height / 2;
+		tiles.push_back(tile);
+		space->addStaticActor(tile);
+
+		Tile* caja = new Tile("res/tiles/plataforma.png", x, y, 45, 10, game);
+		// modificación para empezar a contar desde el suelo.
+		caja->y = caja->y - caja->height / 2;
+		tiles.push_back(caja);
+		space->addStaticActor(caja);
+		break;
+	}
 	case '.': {
 		Tile* tile = new BackgroundTile("res/tiles/background_lvl1.png", x, y, game);
 		tile->y = tile->y - tile->height / 2;
@@ -269,6 +288,9 @@ void GameLayer::processControls() {
 	if (controlContinue) {
 		pause = false;
 		controlContinue = false;
+
+		win = false;
+		loose = false;
 	}
 	if (controlShoot) {
 		//calculateScroll();
@@ -330,7 +352,6 @@ void GameLayer::update() {
 	if (sala2 != nullptr) {
 		if (sala2->isOverlap(player)) {
 			game->currentLevel = 1;
-			
 			init();
 		}
 	}
@@ -378,6 +399,7 @@ void GameLayer::update() {
 			else{
 				player->loseLife();
 				if (player->lifes <= 0) {
+					loose = true;
 					player = nullptr;
 					game->currentLevel = 0;
 					init();
@@ -392,6 +414,7 @@ void GameLayer::update() {
 	list<Enemy*> deleteEnemies;
 	list<Projectile*> deleteProjectiles;
 	list<Recolectable*> deleteRecos;
+	list<Tile*> deleteTiles;
 	for (auto const& projectile : projectiles) {
 		if (projectile->isInRender(scrollX, scrollY) == false || projectile->vx == 0) {
 
@@ -418,6 +441,12 @@ void GameLayer::update() {
 					deleteProjectiles.push_back(projectile);
 				}
 
+				if (game->currentLevel == 3) {
+					win = true;
+					player = nullptr;
+					game->currentLevel = 0;
+					init();
+				}
 
 				enemy->impacted();
 			}
@@ -436,6 +465,9 @@ void GameLayer::update() {
 			if (player->isOverlap(projectile) && projectile->enemyShot) {
 				player->loseLife();
 				if (player->lifes <= 0) {
+					loose = true;
+					player = nullptr;
+					game->currentLevel = 0;
 					init();
 					return;
 				}
@@ -456,6 +488,27 @@ void GameLayer::update() {
 		}
 	}
 
+	for (auto const& tile : tilesDest) {
+		for (auto const& projectile : projectiles) {
+			if (tile->isOverlap(projectile) && tile->isDestruible == true) {
+				bool pInList = std::find(deleteTiles.begin(),
+					deleteTiles.end(),
+					tile) != deleteTiles.end();
+
+				if (!pInList) {
+					deleteTiles.push_back(tile);
+				}
+
+				bool pInList2 = std::find(deleteProjectiles.begin(),
+					deleteProjectiles.end(),
+					projectile) != deleteProjectiles.end();
+
+				if (!pInList2) {
+					deleteProjectiles.push_back(projectile);
+				}
+			}
+		}
+	}
 
 	for (auto const& caja : recolectables) {
 		if (player->isOverlap(caja)) {
@@ -501,6 +554,12 @@ void GameLayer::update() {
 		space->removeDynamicActor(delCaja);
 	}
 	deleteRecos.clear();
+
+	for (auto const& delCaja : deleteTiles) {
+		tilesDest.remove(delCaja);
+		space->removeStaticActor(delCaja);
+	}
+	deleteTiles.clear();
 
 	vidas = player->lifes;
 	textVidas->content = to_string(vidas);
@@ -586,6 +645,12 @@ void GameLayer::draw() {
 	// 
 	if (pause) {
 		message->draw();
+	}
+	if (win) {
+		messageWin->draw();
+	}
+	if (loose) {
+		messageLose->draw();
 	}
 
 	SDL_RenderPresent(game->renderer); // Renderiza

@@ -22,13 +22,19 @@ Ridley::Ridley(float x, float y, Game* game)
 	vy = vyIntelligence;
 
 	shootTime = 5;
-	shootCadence = 50;
+	shootCadence = 1;
 	vidas = 25;
 }
 
 void Ridley::update() {
 	if (shootTime > 0) {
 		shootTime--;
+	}
+	if (parar > 0)
+		parar--;
+	if (parar <= 0) {
+		shootTime = pararCadence;
+		parar = pararCadence*2;
 	}
 
 	bool endAnimation = animation->update();

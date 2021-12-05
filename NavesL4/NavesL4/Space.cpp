@@ -11,8 +11,8 @@ void Space::update() {
         if (actor->gravityEffect) {
             actor->vy = actor->vy + gravity;
             // máxima velocidad de caída por gravedad
-            if (actor->vy > 15) {
-                actor->vy = 15;
+            if (actor->vy > 20) {
+                actor->vy = 20;
             }
         }
         // Aun no se han detectado choques

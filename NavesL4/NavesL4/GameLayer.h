@@ -38,7 +38,11 @@ public:
 	void loadMapObject(char character, float x, float y);
 	void calculateScroll();
 	Actor* message;
+	Actor* messageWin;
+	Actor* messageLose;
 	bool pause;
+	bool win;
+	bool loose;
 	// Elementos de interfaz
 	SDL_GameController* gamePad;
 	Pad* pad;

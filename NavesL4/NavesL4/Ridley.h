@@ -13,5 +13,7 @@ public:
 	void impacted() override;
 
 	float vyIntelligence;
+	int parar = 50;
+	int pararCadence = 50;
 };
 
