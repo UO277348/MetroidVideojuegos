@@ -15,20 +15,20 @@ Player::Player(float x, float y, Game* game)
 		width, height, 160, 77, 1, 2, false, game);
 
 	aShootingUpRight = new Animation("res/jugador/jugador_disparando_arriba_derecha.png",
-		width, height, 160, 77, 15, 2, false, game);
+		width, height, 160, 77, 20, 2, false, game);
 	aShootingUpLeft = new Animation("res/jugador/jugador_disparando_arriba_izquierda.png",
-		width, height, 160, 77, 15, 2, false, game);
+		width, height, 160, 77, 20, 2, false, game);
 
 	aShootingDownRight = new Animation("res/jugador/jugador_disparando_abajo_derecha.png",
-		width, height, 160, 77, 15, 2, false, game);
+		width, height, 160, 77, 20, 2, false, game);
 	aShootingDownLeft = new Animation("res/jugador/jugador_disparando_abajo_izquierda.png",
-		width, height, 160, 77, 15, 2, false, game);
+		width, height, 160, 77, 20, 2, false, game);
 
 
 	aJumpingRight = new Animation("res/jugador/jugador_saltando_derecha.png",
-		width, height, 350, 77, 15, 5, true, game);
+		width, height, 350, 77, 20, 5, true, game);
 	aJumpingLeft = new Animation("res/jugador/jugador_saltando_izquierda.png",
-		width, height, 350, 77, 15, 5, true, game);
+		width, height, 350, 77, 20, 5, true, game);
 
 
 	aIdleRight = new Animation("res/jugador/jugador_idle_derecha.png", width, height,
