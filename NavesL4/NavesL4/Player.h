@@ -38,5 +38,7 @@ public:
 	int lastState = 0;
 
 	int shootMode = 1;
+
+	bool secondaryShoot = false;
 };
 

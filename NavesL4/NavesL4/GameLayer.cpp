@@ -88,6 +88,11 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		enemy->y = enemy->y - enemy->height / 2;
 		enemies.push_back(enemy);
 		space->addDynamicActor(enemy);
+
+		Tile* tile = new BackgroundTile("res/tiles/background_lvl1.png", x, y, game);
+		tile->y = tile->y - tile->height / 2;
+		tiles.push_back(tile);
+		space->addStaticActor(tile);
 		break;
 	}
 	case 'R': {
@@ -96,6 +101,11 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		enemy->y = enemy->y - enemy->height / 2;
 		enemies.push_back(enemy);
 		space->addDynamicActor(enemy);
+
+		Tile* tile = new BackgroundTile("res/tiles/background_lvl1.png", x, y, game);
+		tile->y = tile->y - tile->height / 2;
+		tiles.push_back(tile);
+		space->addStaticActor(tile);
 		break;
 	}
 	case 'M': {
@@ -104,6 +114,11 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		enemy->y = enemy->y - enemy->height / 2;
 		enemies.push_back(enemy);
 		space->addDynamicActor(enemy);
+
+		Tile* tile = new BackgroundTile("res/tiles/background_lvl1.png", x, y, game);
+		tile->y = tile->y - tile->height / 2;
+		tiles.push_back(tile);
+		space->addStaticActor(tile);
 		break;
 	}
 	case 'T': {
@@ -112,6 +127,11 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		enemy->y = enemy->y - enemy->height / 2;
 		enemies.push_back(enemy);
 		space->addDynamicActor(enemy);
+
+		Tile* tile = new BackgroundTile("res/tiles/background_lvl1.png", x, y, game);
+		tile->y = tile->y - tile->height / 2;
+		tiles.push_back(tile);
+		space->addStaticActor(tile);
 		break;
 	}
 	case 'V': {
@@ -120,6 +140,11 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		r->y = r->y - r->height / 2;
 		recolectables.push_back(r);
 		space->addDynamicActor(r);
+
+		Tile* tile = new BackgroundTile("res/tiles/background_lvl1.png", x, y, game);
+		tile->y = tile->y - tile->height / 2;
+		tiles.push_back(tile);
+		space->addStaticActor(tile);
 		break;
 	}
 	case '1': {
@@ -505,7 +530,9 @@ void GameLayer::keysToControls(SDL_Event event) {
 			player->shootMode=1;
 			break;
 		case SDLK_2:
-			player->shootMode = 2;
+			if (player->secondaryShoot == true) {
+				player->shootMode = 2;
+			}
 			break;
 		case SDLK_d: // derecha
 			controlMoveX = 1;
